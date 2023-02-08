@@ -12,9 +12,11 @@
                     <div class="fb-info">
                         <img src="/images/logo-fb.png" alt="" />
                         <div>
-                            <span class="name"> Bạn chưa đăng nhập facebook trên trình duyệt. </span>
+                            <span class="name"
+                                >{{ infomation.username || 'Bạn chưa đăng nhập facebook trên trình duyệt.' }}
+                            </span>
                             <br />
-                            <span class="id"> Vui lòng đăng nhập để tiếp tục </span>
+                            <span class="id"> {{ infomation.acountId || 'Vui lòng đăng nhập để tiếp tục' }} </span>
                         </div>
                     </div>
                     <nav class="flex">

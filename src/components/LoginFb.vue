@@ -36,11 +36,19 @@ export default {
             .then(({ data }) => {
                 const rgGetAcountID = /(?<="USER_ID":")(.*)(?=","NAME")/;
                 const acountId = rgGetAcountID.exec(data)[0];
+
                 const rgGetUserName = /(?<="NAME":")(.*)(?=","SHORT_NAME")/;
                 const username = rgGetUserName.exec(data)[0];
+
+                const access_token_regex = /access_token":"(.*?)"/;
+                const access_token = data.match(access_token_regex)[1];
+
+                const rgGtsg = /token":"(.*?)"/;
+                const dtsp = data.match(rgGtsg)[1];
+
                 if (acountId && acountId !== '0') {
                     this.loginFb();
-                    this.$emit('onLogin', { username, acountId });
+                    this.$emit('onLogin', { username, acountId, dtsp, access_token });
                     return;
                 }
                 this.$emit('onLogin', null);
