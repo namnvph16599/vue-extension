@@ -12,7 +12,7 @@
             <input class="input login-input-email" type="text" placeholder="Địa chỉ email" /><br />
             <input class="input login-input-pwd" type="password" placeholder="Password..." /><br />
 
-            <button type="submit" class="btn-submit">Login</button><br />
+            <button type="submit" class="btn-submit" @click="onLogin">Login</button><br />
             <a href="" class="login-forgot">Quên tài khoản- mật khẩu?</a>
 
             <span class="login-powered">
@@ -28,6 +28,10 @@ export default {
     data() {
         return {};
     },
+    methods: {
+        onLogin() {
+        }
+    }
 };
 </script>
 

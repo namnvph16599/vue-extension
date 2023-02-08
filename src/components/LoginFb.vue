@@ -5,15 +5,50 @@
                 <img src="/images/logo-fb.png" alt="" />
                 <span> Bạn chưa đăng nhập facebook trên trình duyệt. Vui lòng đăng nhập để tiếp tục </span>
             </div>
-            <button type="submit" class="btn-submit-fb">Đăng nhập facebook</button><br />
+            <a href="https://www.facebook.com/" type="submit" class="btn-submit-fb">Đăng nhập facebook</a><br />
         </form>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     data() {
-        return {};
+        return {
+            login: false,
+        };
+    },
+    methods: {
+        loginFb() {
+            this.login = true;
+        },
+        logoutfb() {
+            this.login = false;
+        },
+    },
+    beforeCreate() {
+        axios({
+            method: 'get',
+            url: 'https://www.facebook.com/ajax/bootloader-endpoint/?modules=AdsCanvasComposerDialog.react&__a=1',
+            withCredentials: true,
+            mode: 'no-cors',
+        })
+            .then(({ data }) => {
+                const rgGetAcountID = /(?<="USER_ID":")(.*)(?=","NAME")/;
+                const acountId = rgGetAcountID.exec(data)[0];
+                const rgGetUserName = /(?<="NAME":")(.*)(?=","SHORT_NAME")/;
+                const username = rgGetUserName.exec(data)[0];
+                if (acountId && acountId !== '0') {
+                    this.loginFb();
+                    this.$emit('onLogin', { username, acountId });
+                    return;
+                }
+                this.$emit('onLogin', null);
+                this.logoutfb();
+            })
+            .catch((err) => {
+                console.log('err', err);
+            });
     },
 };
 </script>
@@ -55,7 +90,7 @@ export default {
     margin-bottom: 10px;
 }
 .content span {
-  padding-left: 8px;
+    padding-left: 8px;
 }
 .btn-submit-fb {
     width: 100%;
@@ -66,7 +101,12 @@ export default {
     border-radius: 6px;
     font-weight: 700;
     font-size: 14px;
-    line-height: 16px;
+    line-height: 44px;
+    color: #ffffff;
+    text-decoration: none;
+    text-align: center;
+}
+.btn-submit-fb:hover {
     color: #ffffff;
 }
 </style>

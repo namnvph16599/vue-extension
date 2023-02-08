@@ -6,7 +6,6 @@
                     <img src="/images/switch_account.png" alt="" />
                     <h2 class="content-filter-brand">Friends Filter</h2>
                 </div>
-                
             </div>
             <div class="content-right">
                 <header>
@@ -47,8 +46,7 @@
                 <div class="content-table">
                     <table>
                         <thead class="">
-                            <th class="th-checkbox">
-                            </th>
+                            <th class="th-checkbox"></th>
                             <th>Tên tài khoản</th>
                             <th>Tin nhắn</th>
                             <th>Reaction</th>
@@ -137,6 +135,9 @@
 
 <script>
 export default {
+    props: {
+        infomation: Object,
+    },
     data() {
         return {
             data: [
@@ -192,6 +193,9 @@ export default {
                 },
             ],
         };
+    },
+    onMounted() {
+        console.log('infomation', infomation);
     },
 };
 </script>

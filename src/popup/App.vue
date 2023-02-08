@@ -1,12 +1,16 @@
 <template>
     <div id="app">
-        <div v-if="!isLoggedFb">
-            <LoginFb />
-        </div>
-        <div v-if="isLoggedFb && !isLogged">
-            <Login />
-        </div>
-        <Content />
+        <b-overlay :show="show" style="width:100%;height:100vh">
+            <b-card title="Card with overlay" :aria-hidden="show ? 'true' : null">
+                <div v-if="!isLoggedFb">
+                    <LoginFb @onLogin="handleLoginFb" />
+                </div>
+                <div v-if="isLoggedFb && !isLogged">
+                    <Login />
+                </div>
+                <Content :infomation="infomation" />
+            </b-card>
+        </b-overlay>
     </div>
 </template>
 
@@ -19,22 +23,34 @@ export default {
     components: {
         Login,
         LoginFb,
-        Content
+        Content,
     },
     data() {
         return {
             isLogged: false,
             isLoggedFb: false,
+            infomation: {},
+            show: true,
         };
     },
-    name: 'App',
+    methods: {
+        handleLoginFb(data) {
+            this.show = false;
+            if (!data) {
+                this.isLoggedFb = false;
+                this.infomation = null;
+                return;
+            }
+            this.isLoggedFb = true;
+            this.infomation = data;
+        },
+    },
 };
 </script>
 
 <style>
 @font-face {
-  font-family: 'SF UI Display';
-  src: url(../../src/assets/fonts/regular.ttf);
+    font-family: 'SF UI Display';
+    src: url(../../src/assets/fonts/regular.ttf);
 }
-
 </style>
