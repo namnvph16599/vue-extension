@@ -1,10 +1,179 @@
-.<template>
+.
+<template>
     <div>
         <div class="main-content justify-center">
             <div class="content-filter">
-                <div class="content-filter-logo">
-                    <img src="/images/switch_account.png" alt="" />
-                    <h2 class="content-filter-brand">Friends Filter</h2>
+                <div class="filter-main">
+                    <div class="content-filter-logo">
+                        <img src="/images/switch_account.png" alt="" />
+                        <h2 class="content-filter-brand">Friends Filter</h2>
+                    </div>
+                    <!-- tuong tac -->
+                    <div :class="interac ? 'active filter-interac' : 'filter-interac'">
+                        <div class="filter-header__box align-center">
+                            <div class="align-center">
+                                <img src="/images/tuongtac.png" alt="" />
+                                <span class="filter-interac__header-title"> Tương tác </span>
+                            </div>
+                            <input type="radio" id="interac-radio" :checked="interac" @click="interac = !interac" />
+                        </div>
+                        <div class="filter-main__content" v-if="interac">
+                            <label class="title-filter" for="date-picker">Lọc kể từ ngày:</label>
+                            <input type="date" name="date-picker" id="date-picker" />
+
+                            <h4 class="title-filter">Nội dung lọc</h4>
+                            <form>
+                                <div class="align-center filter-interac__checkbox">
+                                    <div>
+                                        <input type="checkbox" name="" id="message" /><label
+                                            class="filter-interac__checkbox-text"
+                                            for="message"
+                                            >Tin nhắn</label
+                                        >
+                                    </div>
+                                    <img class="info" src="/images/i.png" alt="" />
+                                </div>
+                                <div class="align-center filter-interac__checkbox">
+                                    <div>
+                                        <input type="checkbox" name="" id="reaction" /><label
+                                            class="filter-interac__checkbox-text"
+                                            for="reaction"
+                                            >Reaction</label
+                                        >
+                                    </div>
+                                    <img class="info" src="/images/i.png" alt="" />
+                                </div>
+                                <div class="align-center filter-interac__checkbox">
+                                    <div>
+                                        <input type="checkbox" name="" id="comment" /><label
+                                            class="filter-interac__checkbox-text"
+                                            for="comment"
+                                            >Bình luận</label
+                                        >
+                                    </div>
+                                    <img class="info" src="/images/i.png" alt="" />
+                                </div>
+                                <div class="align-center filter-interac__checkbox">
+                                    <div>
+                                        <input type="checkbox" name="" id="share" /><label
+                                            class="filter-interac__checkbox-text"
+                                            for="share"
+                                            >Chia sẻ bài biết</label
+                                        >
+                                    </div>
+                                    <img class="info" src="/images/i.png" alt="" />
+                                </div>
+
+                                <div class="align-center">
+                                    <button class="btn-reset" type="reset">Đặt lại</button>
+                                    <button class="btn-filter-main">Lọc</button>
+                                </div>
+                                <span class="note">
+                                    Riêng tùy chọn lọc tin nhắn sẽ không thể lọc theo thời gian do giới hạn API của
+                                    facebook.
+                                </span>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- tai khoan vo hieu hoa -->
+                    <div :class="acount_disabled ? 'active filter-interac' : 'filter-interac'">
+                        <div class="filter-header__box align-center">
+                            <div class="align-center">
+                                <img src="/images/vohieuhoa.png" alt="" />
+                                <span class="filter-interac__header-title"> TK bị vô hiệu hóa </span>
+                            </div>
+                            <input
+                                type="radio"
+                                id="acount_disabled"
+                                :checked="acount_disabled"
+                                @click="acount_disabled = !acount_disabled"
+                            />
+                        </div>
+                    </div>
+                    <!-- banj chung -->
+                    <div :class="same_friend ? 'active filter-interac' : 'filter-interac'">
+                        <div class="filter-header__box align-center">
+                            <div class="align-center">
+                                <img src="/images/same.png" alt="" />
+                                <span class="filter-interac__header-title"> Bạn chung </span>
+                            </div>
+                            <input
+                                type="radio"
+                                id="same_friend"
+                                :checked="same_friend"
+                                @click="same_friend = !same_friend"
+                            />
+                        </div>
+                        <div class="filter-main__content" v-if="same_friend">
+                            <label class="title-filter">số lượng bạn chung</label>
+
+                            <form>
+                                <select name="" id="" class="friend-same__select">
+                                    <option value="">Nhỏ hơn hoặc bằng</option>
+                                    <option value="">Lớn hơn hoặc bằng</option>
+                                </select>
+                                <div class="friend-same_box">
+                                    <input class="friend-same_input" type="number" placeholder="Điền số lượng..." />
+                                    <img src="/images/pen.png" class="pen" alt="" />
+                                </div>
+
+                                <div class="align-center">
+                                    <button class="btn-reset" type="reset">Đặt lại</button>
+                                    <button class="btn-filter-main">Lọc</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- ban be -->
+                    <div :class="friend ? 'active filter-interac' : 'filter-interac'">
+                        <div class="filter-header__box align-center">
+                            <div class="align-center">
+                                <img src="/images/friend.png" alt="" />
+                                <span class="filter-interac__header-title"> Bạn bè </span>
+                            </div>
+                            <input type="radio" id="friend" :checked="friend" @click="friend = !friend" />
+                        </div>
+                        <div class="filter-main__content" v-if="friend">
+                            <label class="title-filter">số lượng bạn bè</label>
+
+                            <form>
+                                <select name="" id="" class="friend-same__select">
+                                    <option value="">Nhỏ hơn hoặc bằng</option>
+                                    <option value="">Lớn hơn hoặc bằng</option>
+                                </select>
+                                <div class="friend-same_box">
+                                    <input class="friend-same_input" type="number" placeholder="Điền số lượng..." />
+                                    <img src="/images/pen.png" class="pen" alt="" />
+                                </div>
+
+                                <div class="align-center">
+                                    <button class="btn-reset" type="reset">Đặt lại</button>
+                                    <button class="btn-filter-main">Lọc</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- ngay kh dang bai -->
+                    <div :class="no_post ? 'active filter-interac' : 'filter-interac'">
+                        <div class="filter-header__box align-center">
+                            <div class="align-center">
+                                <img src="/images/nopost.png" alt="" />
+                                <span class="filter-interac__header-title"> Ngày không đăng bài </span>
+                            </div>
+                            <input type="radio" id="no_post" :checked="no_post" @click="no_post = !no_post" />
+                        </div>
+                        <div class="filter-main__content" v-if="no_post">
+                            <label class="title-filter">Không đăng bài kể từ ngày:</label>
+
+                            <form>
+                                <input type="date" name="date-picker" id="date-picker" />
+                                <div class="align-center">
+                                    <button class="btn-reset" type="reset">Đặt lại</button>
+                                    <button class="btn-filter-main">Lọc</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="content-right">
@@ -20,13 +189,13 @@
                         </div>
                     </div>
                     <nav class="flex">
-                        <div class="flex remove-friends">
+                        <!-- <div class="flex remove-friends">
                             <span class="remove-friends-selected">Đã chọn 129 người bạn</span>
                             <button class="flex">
                                 <img class="icon-remove" src="/images/thung-rac.png" alt="" />
                                 <span>Hủy kết bạn</span>
                             </button>
-                        </div>
+                        </div> -->
                         <button class="flex btn-filter">
                             <img src="/images/icon-filter.png" alt="" />
                             <span>Lọc</span>
@@ -58,18 +227,19 @@
                             <th>Hành dộng</th>
                         </thead>
                         <tbody>
-                            <img class="empty" v-if="data.length === 0" src="/images/empty-data.png" />
-                            <tr v-else-if="data.length !== 0" v-for="item in data" :key="item.id">
+                            <img class="empty" v-if="loading" src="/images/loading-.gif" style="width: 250px" />
+                            <img
+                                class="empty"
+                                v-else-if="values.length === 0 && !loading"
+                                src="/images/empty-data.png"
+                            />
+                            <tr v-else-if="values.length !== 0 && !loading" v-for="item in values" :key="item.id">
                                 <td>
                                     <input type="checkbox" class="input-checkbox" />
                                 </td>
                                 <td>
                                     <div class="content-tabel__info">
-                                        <img
-                                            class="avatar"
-                                            src="https://res.cloudinary.com/vannam042/image/upload/v1649580351/z3330081096623_8be91a1ad0d803e7fa8056c4cf3b81f0_v15v8o.jpg"
-                                            alt=""
-                                        />
+                                        <img class="avatar" :src="item.url" alt="" />
                                         <div>
                                             <span class="content-table__name">{{ item.name }}</span>
                                             <span class="content-table__key">{{ item.id }}</span>
@@ -77,23 +247,33 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <span class="content-table__number">{{ item.message }}</span>
-                                    <span class="content-tabel__point">điểm</span>
+                                    <span class="content-table__number">{{ item.messages }}</span>
+                                    <span class="content-tabel__point">
+                                        {{ item.messages * 0.5 }}
+                                        điểm</span
+                                    >
                                 </td>
+                                <td>
+                                    <span class="content-table__number">{{ item.reactions }}</span>
+                                    <span class="content-tabel__point">
+                                        {{ item.reactions }}
+                                        điểm</span
+                                    >
+                                </td>
+                                <td>
+                                    <span class="content-table__number">{{ item.comments }}</span>
+                                    <span class="content-tabel__point">
+                                        {{ item.comments * 3 }}
+                                        điểm</span
+                                    >
+                                </td>
+
                                 <td>
                                     <span class="content-table__number">{{ item.message }}</span>
                                     <span class="content-tabel__point">điểm</span>
                                 </td>
                                 <td>
-                                    <span class="content-table__number">{{ item.message }}</span>
-                                    <span class="content-tabel__point">điểm</span>
-                                </td>
-                                <td>
-                                    <span class="content-table__number">{{ item.message }}</span>
-                                    <span class="content-tabel__point">điểm</span>
-                                </td>
-                                <td>
-                                    <span>item.status</span>
+                                    <span>{{ item.status }}</span>
                                 </td>
                                 <td>
                                     <button class="btn-unfriend flex">
@@ -102,13 +282,12 @@
                                     </button>
                                 </td>
                             </tr>
-                            <div v-else-if="type === 'C'">C</div>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-        <div class="remove-friends-success remove-friends-pending">
+        <!-- <div class="remove-friends-success remove-friends-pending">
             <div class="justify-between align-center">
                 <div class="flex">
                     <img src="/images/success.png" alt="" />
@@ -131,74 +310,178 @@
                 </div>
                 <button class="btn-cancel">Cancel</button>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
 <script>
+import axios from 'axios';
+import qs from 'qs';
 export default {
     props: {
         infomation: Object,
     },
     data() {
         return {
-            data: [
-                {
-                    avatar: 'https://res.cloudinary.com/vannam042/image/upload/v1649580351/z3330081096623_8be91a1ad0d803e7fa8056c4cf3b81f0_v15v8o.jpg',
-                    name: 'Cao Hong Nhung',
-                    id: 111111111111111,
-                    message: 12,
-                    reaction: 12,
-                    comment: 12,
-                    share: 12,
-                    status: 'status',
-                },
-                {
-                    avatar: 'https://res.cloudinary.com/vannam042/image/upload/v1649580351/z3330081096623_8be91a1ad0d803e7fa8056c4cf3b81f0_v15v8o.jpg',
-                    name: 'Cao Hong Nhung',
-                    id: 111111111111111,
-                    message: 12,
-                    reaction: 12,
-                    comment: 12,
-                    share: 12,
-                    status: 'status',
-                },
-                {
-                    avatar: 'https://res.cloudinary.com/vannam042/image/upload/v1649580351/z3330081096623_8be91a1ad0d803e7fa8056c4cf3b81f0_v15v8o.jpg',
-                    name: 'Cao Hong Nhung',
-                    id: 111111111111111,
-                    message: 12,
-                    reaction: 12,
-                    comment: 12,
-                    share: 12,
-                    status: 'status',
-                },
-                {
-                    avatar: 'https://res.cloudinary.com/vannam042/image/upload/v1649580351/z3330081096623_8be91a1ad0d803e7fa8056c4cf3b81f0_v15v8o.jpg',
-                    name: 'Cao Hong Nhung',
-                    id: 111111111111111,
-                    message: 12,
-                    reaction: 12,
-                    comment: 12,
-                    share: 12,
-                    status: 'status',
-                },
-                {
-                    avatar: 'https://res.cloudinary.com/vannam042/image/upload/v1649580351/z3330081096623_8be91a1ad0d803e7fa8056c4cf3b81f0_v15v8o.jpg',
-                    name: 'Cao Hong Nhung',
-                    id: 111111111111111,
-                    message: 12,
-                    reaction: 12,
-                    comment: 12,
-                    share: 12,
-                    status: 'status',
-                },
-            ],
+            values: [],
+            friends: [],
+            messages: [],
+            reaction: [],
+            comment: [],
+            loading: true,
+            interac: false,
+            acount_disabled: false,
+            same_friend: false,
+            friend: false,
+            no_post: false,
         };
     },
-    onMounted() {
-        console.log('infomation', infomation);
+    created() {},
+    methods: {
+        saveFriends() {
+            console.log('save');
+            this.values = this.friends.map((friend) => {
+                const id = friend.node.node.id;
+                const getMessageById = this.messages.find(
+                    (values) => values.all_participants.nodes[0].messaging_actor.id === id,
+                );
+                const messages = getMessageById ? getMessageById.messages_count : 0;
+                const getReactions = this.reaction.filter((item) => item.id === id);
+                const getComments = this.comment.filter((item) => item.id === id);
+                return {
+                    id,
+                    name: friend.node.title.text,
+                    url: friend.node.image.uri,
+                    messages,
+                    comments: getComments.length,
+                    reactions: getReactions.length,
+                    status: friend.node.actions_renderer.action.title.text,
+                };
+            });
+        },
     },
+    // mounted() {
+    //     console.log(222222);
+    //     if (!Object.keys(this.infomation).length) return;
+    //     const config = {
+    //         method: 'post',
+    //         headers: {
+    //             'Content-Type': 'application/x-www-form-urlencoded',
+    //         },
+    //         withCredentials: true,
+    //         mode: 'no-cors',
+    //     };
+    //     console.log(999999);
+    //     const getListFriendRecursion = (cursor) => {
+    //         axios({
+    //             ...config,
+    //             url: 'https://www.facebook.com/api/graphql/',
+    //             data: qs.stringify({
+    //                 __a: 1,
+    //                 dpr: 1,
+    //                 fb_dtsg: this.infomation.dtsg,
+    //                 variables: JSON.stringify({
+    //                     count: 8,
+    //                     cursor,
+    //                     scale: 1,
+    //                     search: null,
+    //                     id: window.btoa(`app_collection:${this.infomation.acountId}:2356318349:2`),
+    //                 }),
+    //                 doc_id: 6227691327241927,
+    //             }),
+    //         })
+    //             .then(
+    //                 ({
+    //                     data: {
+    //                         data: {
+    //                             node: { pageItems },
+    //                         },
+    //                     },
+    //                 }) => {
+    //                     console.log('pageItems', pageItems);
+    //                     this.friends = [...this.friends, ...pageItems.edges];
+    //                     if (pageItems.page_info.has_next_page && pageItems.page_info.end_cursor) {
+    //                         getListFriendRecursion(pageItems.page_info.end_cursor);
+    //                     }
+    //                 },
+    //             )
+    //             .catch((err) => {
+    //                 console.log('1111111', err);
+    //             });
+    //     };
+
+    //     // getListFriendRecursion();
+
+    //     const getReactionAndCommentRecursion = (end_cursor = '') => {
+    //         axios({
+    //             ...config,
+    //             url: 'https://www.facebook.com/api/graphql/',
+    //             data: qs.stringify({
+    //                 fb_dtsg: this.infomation.dtsg,
+    //                 q: `node(${this.infomation.acountId}){timeline_feed_units.first(100).after(){page_info,edges{node{id,creation_time,feedback{reactors{nodes{id,name}},commenters{nodes{id,name}}}}}}}`,
+    //             }),
+    //         })
+    //             .then(({ data }) => {
+    //                 const userId = this.infomation.acountId;
+    //                 console.log('userId', userId);
+    //                 const res = data[userId].timeline_feed_units;
+    //                 const edges = res.edges;
+    //                 console.log('reactiton and comment', res);
+    //                 let listReaction = [];
+    //                 let listComment = [];
+
+    //                 edges.forEach((item) => {
+    //                     listReaction = [...listReaction, ...item.node.feedback.reactors.nodes];
+    //                     listComment = [...listComment, ...item.node.feedback.commenters.nodes];
+    //                 });
+
+    //                 this.reaction = [...this.reaction, ...listReaction];
+    //                 this.comment = [...this.comment, ...listComment];
+    //                 if (res.page_info.has_next_page) {
+    //                     getReactionAndCommentRecursion(res.page_info.end_cursor);
+    //                 }
+    //                 console.log('listReaction', listReaction);
+    //                 console.log('listComment', listComment);
+    //             })
+    //             .catch((err) => {
+    //                 console.log('1111111', err);
+    //             });
+    //         getReactionAndCommentRecursion();
+    //     };
+
+    //     const getMessages = axios({
+    //         ...config,
+    //         url: 'https://www.facebook.com/api/graphql/',
+    //         data: qs.stringify({
+    //             fb_dtsg: this.infomation.dtsg,
+    //             q: `viewer(){message_threads{count,nodes{customization_info{emoji,outgoing_bubble_color,participant_customizations{participant_id,nickname}},all_participants{nodes{messaging_actor{name,id,profile_picture}}},thread_type,name,messages_count,image,id}}}`,
+    //         }),
+    //     }).then(({ data }) => {
+    //         console.log('call api messages', data.viewer.message_threads.nodes);
+    //         this.messages = data.viewer.message_threads.nodes;
+    //     });
+    //     async function getData() {
+    //         await getListFriendRecursion();
+    //         await getReactionAndCommentRecursion();
+    //         getMessages();
+    //         this.loading = false;
+    //         this.saveFriends();
+    //     }
+    //     getData();
+    //     // Promise.all([getListFriendRecursion, getReactionAndCommentRecursion, getMessages])
+    //     //     .then((res) => {
+    //     //         console.log('res', res);
+    //     //         this.saveFriends();
+    //     //     })
+    //     //     .catch((err) => {
+    //     //         console.log('err promise all', err);
+    //     //     })
+    //     //     .finally(() => {
+    //     //         this.loading = false;
+    //     //     });
+
+    //     // this.saveFriends();
+    // },
 };
 </script>
 
@@ -221,14 +504,154 @@ export default {
     justify-content: center;
     align-items: center;
 }
-.content-filter {
-    background-color: #f8fbff;
-    flex: 300px;
+.filter-main {
+    overflow: auto;
+    display: inline;
+    position: fixed;
+    width: 300px;
+    top: 0;
+    left: 0;
+    bottom: 0;
 }
+.content-filter {
+    background-color: #fff;
+    flex: 300px;
+    border: 1px solid #efefef;
+}
+.filter-header__box {
+    height: 50px;
+    padding: 0 22px;
+}
+.filter-main__content {
+    background: #f3f9ff;
+    /* background: #ccc; */
 
+    padding: 0 22px;
+}
+#date-picker {
+    width: 100%;
+    background: #ffffff;
+    border-radius: 6px;
+    height: 40px;
+    color: #434f64;
+    border: none;
+    outline: none;
+    font-family: Medium;
+    padding: 0 10px;
+    margin-bottom: 10px;
+}
+.title-filter {
+    display: block;
+    padding: 10px 0;
+    font-weight: Bold;
+    font-size: 12px;
+    line-height: 16px;
+    text-transform: uppercase;
+    color: #adb7c9;
+    margin-bottom: 0px;
+}
+.active {
+    background: #2d96f7;
+}
+.active .filter-interac__header-title {
+    color: #fff;
+}
+.filter-interac__header-title {
+    font-style: normal;
+    font-weight: Bold;
+    font-size: 14px;
+    line-height: 20px;
+    color: #434f64;
+    padding-left: 8px;
+}
+.filter-interac__checkbox {
+    padding-top: 22px;
+}
+.filter-interac__checkbox-text {
+    font-weight: Medium;
+    font-size: 14px;
+    line-height: 20px;
+    color: #434f64;
+    padding-left: 8px;
+}
+.friend-same__select {
+    padding: 10px;
+    width: 100%;
+    height: 40px;
+    background: #ffffff;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    font-family: Medium;
+    font-size: 14px;
+    line-height: 16px;
+    color: #434f64;
+    margin-bottom: 10px;
+}
+.friend-same_box {
+    position: relative;
+}
+.friend-same_input {
+    padding: 10px;
+    width: 100%;
+    height: 40px;
+    background: #ffffff;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    font-family: Medium;
+    font-size: 14px;
+    line-height: 20px;
+    color: #a7aeb7;
+}
+.pen {
+    position: absolute;
+    right: 32px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+}
+.btn-reset {
+    width: 120px;
+    height: 36px;
+    background: #fafeff;
+    border-radius: 5px;
+    padding: 10px;
+    font-weight: Medium;
+    font-size: 14px;
+    line-height: 16px;
+    color: #2d96f7;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+}
+.btn-filter-main {
+    margin: 20px 0;
+    width: 120px;
+    height: 36px;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    font-weight: Medium;
+    font-size: 14px;
+    line-height: 16px;
+    background: #2d96f7;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+}
+.note {
+    font-family: Medium;
+    font-size: 12px;
+    line-height: 15px;
+    display: block;
+    padding: 0 0 22px;
+    color: #fcb500;
+}
 .content-right {
     background-color: #fff;
-    flex: 70%;
+    flex: 0 83%;
 }
 header {
     padding: 0 34px;
@@ -240,16 +663,15 @@ header {
 .content-filter-logo {
     display: flex;
     align-items: center;
-    padding: 0 22px;
     height: 82px;
+    padding: 0 22px;
 }
 .content-filter-logo img {
     padding-right: 8px;
 }
 .content-filter-logo h2 {
-    font-family: 'SF UI Display';
     font-style: normal;
-    font-weight: 800;
+    font-family: Bold;
     font-size: 16px;
     line-height: 19px;
     background: linear-gradient(96.37deg, #30cf68 -25.44%, #4ac9ff 118.75%), #d9d9d9;
@@ -266,15 +688,13 @@ header {
     gap: 10px;
 }
 .fb-info .name {
-    font-family: 'SF Pro Display';
     font-style: normal;
-    font-weight: 500;
+    font-family: Medium;
     font-size: 16px;
     line-height: 14px;
     color: #434f64;
 }
 .fb-info .id {
-    font-family: 'SF Pro Display';
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -292,9 +712,8 @@ header {
     color: #fff;
     padding: 0 10px;
     margin: 0 10px;
-    font-family: 'SF Pro Display';
     font-style: normal;
-    font-weight: 500;
+    font-family: Medium;
     font-size: 14px;
     line-height: 20px;
 }
@@ -302,9 +721,8 @@ header {
     padding-right: 4px;
 }
 .remove-friends-selected {
-    font-family: 'SF Pro Display';
     font-style: normal;
-    font-weight: 500;
+    font-family: Medium;
     font-size: 14px;
     color: #000000;
 }
@@ -315,9 +733,8 @@ header {
     outline: none;
     border: none;
     padding: 0 16px;
-    font-family: 'SF Pro Display';
     font-style: normal;
-    font-weight: 500;
+    font-family: Medium;
     font-size: 14px;
     color: #78889b;
 }
@@ -331,9 +748,8 @@ header {
 .input-search {
     height: 42px;
     padding: 8px 16px;
-    font-family: 'SF Pro Display';
     font-style: normal;
-    font-weight: 500;
+    font-family: Medium;
     font-size: 14px;
     color: #78889b;
     background: #f0f6fc;
@@ -367,9 +783,9 @@ header {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    font-family: 'SF Pro Display';
+    font-family: Bold;
     font-style: normal;
-    font-weight: 700;
+    /* font-weight: 700; */
     font-size: 14px;
     color: #2d96f7;
     background: #f0f6fc;
@@ -409,15 +825,13 @@ header {
 }
 .content-table__name {
     display: block;
-    font-family: 'SF Pro Display';
     font-style: normal;
-    font-weight: 500;
+    font-family: Medium;
     font-size: 14px;
     line-height: 17px;
     color: #434f64;
 }
 .content-table__key {
-    font-family: 'SF Pro Display';
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -426,15 +840,13 @@ header {
 }
 .content-table__number {
     display: block;
-    font-family: 'SF Pro Display';
     font-style: normal;
-    font-weight: 500;
+    font-family: Medium;
     font-size: 14px;
     line-height: 17px;
     color: #434f64;
 }
 .content-table__point {
-    font-family: 'SF Pro Display';
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -449,9 +861,8 @@ header {
     background-color: #fff;
 }
 .btn-unfriend span {
-    font-family: 'SF Pro Display';
     font-style: normal;
-    font-weight: 500;
+    font-family: Medium;
     font-size: 14px;
     line-height: 20px;
     color: #434f64;
@@ -489,15 +900,13 @@ header {
     display: block;
 }
 .remove-friends-pending__title-loading {
-    font-family: 'SF Pro Display';
     font-style: normal;
-    font-weight: 500;
+    font-family: Medium;
     font-size: 14px;
     line-height: 17px;
     color: #000000;
 }
 .remove-friends-pending__title-process {
-    font-family: 'SF Pro Display';
     font-style: normal;
     font-weight: 700;
     font-size: 14px;
@@ -510,9 +919,8 @@ header {
     height: 24px;
     background: #fff5f4;
     border-radius: 6px;
-    font-family: 'SF Pro Display';
     font-style: normal;
-    font-weight: 500;
+    font-family: Medium;
     font-size: 14px;
     line-height: 17px;
     color: #ff423a;
