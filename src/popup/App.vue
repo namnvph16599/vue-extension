@@ -1,16 +1,14 @@
 <template>
     <div id="app">
-        <b-overlay :show="show" style="width:100%;height:100vh">
-            <b-card title="Card with overlay" :aria-hidden="show ? 'true' : null">
-                <div v-if="!isLoggedFb">
-                    <LoginFb @onLogin="handleLoginFb" />
-                </div>
-                <div v-if="isLoggedFb && !isLogged">
-                    <Login />
-                </div>
-                <Content :infomation="infomation" />
-            </b-card>
-        </b-overlay>
+        <div v-if="!isLoggedFb">
+            <LoginFb @onLogin="handleLoginFb" />
+        </div>
+        <div v-if="isLoggedFb && !isLogged">
+            <Login />
+        </div>
+        <div v-if="isLoggedFb && isLogged">
+            <Content :infomation="infomation" />
+        </div>
     </div>
 </template>
 
@@ -27,15 +25,14 @@ export default {
     },
     data() {
         return {
-            isLogged: false,
+            isLogged: true,
             isLoggedFb: false,
             infomation: {},
-            show: true,
         };
     },
     methods: {
         handleLoginFb(data) {
-            this.show = false;
+            console.log('data', data);
             if (!data) {
                 this.isLoggedFb = false;
                 this.infomation = null;
@@ -50,7 +47,20 @@ export default {
 
 <style>
 @font-face {
-    font-family: 'SF UI Display';
+    font-family: Regular;
     src: url(../../src/assets/fonts/regular.ttf);
+}
+@font-face {
+    font-family: Bold;
+    src: url(../../src/assets/fonts/bold.otf);
+}
+
+@font-face {
+    font-family: Medium;
+    src: url(../../src/assets/fonts/regular.ttf);
+}
+
+#app {
+    font-family: Bold;
 }
 </style>

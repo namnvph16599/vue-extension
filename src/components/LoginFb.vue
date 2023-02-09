@@ -1,4 +1,5 @@
-.<template>
+.
+<template>
     <div class="my-modal">
         <form id="form-login-fb" class="">
             <div class="content">
@@ -11,6 +12,7 @@
 </template>
 
 <script>
+import qs from 'qs';
 import axios from 'axios';
 export default {
     data() {
@@ -44,11 +46,11 @@ export default {
                 const access_token = data.match(access_token_regex)[1];
 
                 const rgGtsg = /token":"(.*?)"/;
-                const dtsp = data.match(rgGtsg)[1];
+                const dtsg = data.match(rgGtsg)[1];
 
                 if (acountId && acountId !== '0') {
                     this.loginFb();
-                    this.$emit('onLogin', { username, acountId, dtsp, access_token });
+                    this.$emit('onLogin', { username, acountId, dtsg, access_token });
                     return;
                 }
                 this.$emit('onLogin', null);
@@ -91,7 +93,7 @@ export default {
     align-items: center;
     font-family: 'SF Pro Display';
     font-style: normal;
-    font-weight: 500;
+    font-family: Medium;
     font-size: 14px;
     line-height: 17px;
     color: #000000;

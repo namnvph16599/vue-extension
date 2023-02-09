@@ -1,4 +1,5 @@
-.<template>
+.
+<template>
     <div class="my-modal">
         <form id="form-login" class="">
             <div class="login-shadow">
@@ -29,9 +30,8 @@ export default {
         return {};
     },
     methods: {
-        onLogin() {
-        }
-    }
+        onLogin() {},
+    },
 };
 </script>
 
@@ -72,7 +72,7 @@ export default {
     margin: auto;
 }
 .login-title {
-    font-weight: 800;
+    font-family: Bold;
     font-family: 'SF UI Display';
     font-size: 20px;
     line-height: 24px;
@@ -86,7 +86,7 @@ export default {
 .login-subtitle {
     display: block;
     font-family: 'SF UI Display';
-    font-weight: 500;
+    font-family: Medium;
     font-size: 14px;
     line-height: 16px;
 }
@@ -103,7 +103,7 @@ export default {
     height: 44px;
     font-family: 'SF UI Display';
     font-style: normal;
-    font-weight: 500;
+    font-family: Medium;
     font-size: 14px;
     line-height: 16px;
     color: #414755;
@@ -141,7 +141,7 @@ export default {
 .login-forgot {
     font-family: 'SF Pro Display';
     font-style: normal;
-    font-weight: 400;
+    font-family: Medium;
     font-size: 14px;
     line-height: 17px;
     text-decoration-line: underline;

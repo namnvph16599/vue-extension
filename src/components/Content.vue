@@ -9,53 +9,64 @@
                         <h2 class="content-filter-brand">Friends Filter</h2>
                     </div>
                     <!-- tuong tac -->
-                    <div :class="interac ? 'active filter-interac' : 'filter-interac'">
-                        <div class="filter-header__box align-center">
+                    <div :class="filter && filter === 'interac' ? 'active filter-interac' : 'filter-interac'">
+                        <label class="filter-header__box align-center">
                             <div class="align-center">
                                 <img src="/images/tuongtac.png" alt="" />
                                 <span class="filter-interac__header-title"> Tương tác </span>
                             </div>
-                            <input type="radio" id="interac-radio" :checked="interac" @click="interac = !interac" />
-                        </div>
-                        <div class="filter-main__content" v-if="interac">
+                            <input
+                                type="radio"
+                                id="interac-radio"
+                                :checked="filter && filter === 'interac'"
+                                @click="setActive('interac')"
+                            />
+                        </label>
+                        <div class="filter-main__content" v-if="filter && filter === 'interac'">
                             <label class="title-filter" for="date-picker">Lọc kể từ ngày:</label>
                             <input type="date" name="date-picker" id="date-picker" />
 
                             <h4 class="title-filter">Nội dung lọc</h4>
-                            <form>
+                            <form @submit.prevent="getFormValuesInterac">
                                 <div class="align-center filter-interac__checkbox">
                                     <div>
-                                        <input type="checkbox" name="" id="message" /><label
-                                            class="filter-interac__checkbox-text"
-                                            for="message"
-                                            >Tin nhắn</label
-                                        >
+                                        <input
+                                            type="checkbox"
+                                            v-model="keys"
+                                            name=""
+                                            id="message"
+                                            value="message"
+                                        /><label class="filter-interac__checkbox-text" for="message">Tin nhắn</label>
                                     </div>
                                     <img class="info" src="/images/i.png" alt="" />
                                 </div>
                                 <div class="align-center filter-interac__checkbox">
                                     <div>
-                                        <input type="checkbox" name="" id="reaction" /><label
-                                            class="filter-interac__checkbox-text"
-                                            for="reaction"
-                                            >Reaction</label
-                                        >
+                                        <input
+                                            type="checkbox"
+                                            v-model="keys"
+                                            name=""
+                                            id="reaction"
+                                            value="reaction"
+                                        /><label class="filter-interac__checkbox-text" for="reaction">Reaction</label>
                                     </div>
                                     <img class="info" src="/images/i.png" alt="" />
                                 </div>
                                 <div class="align-center filter-interac__checkbox">
                                     <div>
-                                        <input type="checkbox" name="" id="comment" /><label
-                                            class="filter-interac__checkbox-text"
-                                            for="comment"
-                                            >Bình luận</label
-                                        >
+                                        <input
+                                            type="checkbox"
+                                            v-model="keys"
+                                            name=""
+                                            id="comment"
+                                            value="comment"
+                                        /><label class="filter-interac__checkbox-text" for="comment">Bình luận</label>
                                     </div>
                                     <img class="info" src="/images/i.png" alt="" />
                                 </div>
                                 <div class="align-center filter-interac__checkbox">
                                     <div>
-                                        <input type="checkbox" name="" id="share" /><label
+                                        <input type="checkbox" v-model="keys" name="" id="share" value="share" /><label
                                             class="filter-interac__checkbox-text"
                                             for="share"
                                             >Chia sẻ bài biết</label
@@ -76,35 +87,35 @@
                         </div>
                     </div>
                     <!-- tai khoan vo hieu hoa -->
-                    <div :class="acount_disabled ? 'active filter-interac' : 'filter-interac'">
-                        <div class="filter-header__box align-center">
+                    <div :class="filter && filter === 'acount_disabled' ? 'active filter-interac' : 'filter-interac'">
+                        <label class="filter-header__box align-center">
                             <div class="align-center">
                                 <img src="/images/vohieuhoa.png" alt="" />
                                 <span class="filter-interac__header-title"> TK bị vô hiệu hóa </span>
                             </div>
                             <input
                                 type="radio"
-                                id="acount_disabled"
-                                :checked="acount_disabled"
-                                @click="acount_disabled = !acount_disabled"
+                                id="interac-radio"
+                                :checked="filter && filter === 'acount_disabled'"
+                                @click="setActive('acount_disabled')"
                             />
-                        </div>
+                        </label>
                     </div>
                     <!-- banj chung -->
-                    <div :class="same_friend ? 'active filter-interac' : 'filter-interac'">
-                        <div class="filter-header__box align-center">
+                    <div :class="filter && filter === 'same_friend' ? 'active filter-interac' : 'filter-interac'">
+                        <label class="filter-header__box align-center">
                             <div class="align-center">
                                 <img src="/images/same.png" alt="" />
                                 <span class="filter-interac__header-title"> Bạn chung </span>
                             </div>
                             <input
                                 type="radio"
-                                id="same_friend"
-                                :checked="same_friend"
-                                @click="same_friend = !same_friend"
+                                id="interac-radio"
+                                :checked="filter && filter === 'same_friend'"
+                                @click="setActive('same_friend')"
                             />
-                        </div>
-                        <div class="filter-main__content" v-if="same_friend">
+                        </label>
+                        <div class="filter-main__content" v-if="filter && filter === 'same_friend'">
                             <label class="title-filter">số lượng bạn chung</label>
 
                             <form>
@@ -113,7 +124,7 @@
                                     <option value="">Lớn hơn hoặc bằng</option>
                                 </select>
                                 <div class="friend-same_box">
-                                    <input class="friend-same_input" type="number" placeholder="Điền số lượng..." />
+                                    <input class="friend-same_input" type="string" placeholder="Điền số lượng..." />
                                     <img src="/images/pen.png" class="pen" alt="" />
                                 </div>
 
@@ -125,15 +136,20 @@
                         </div>
                     </div>
                     <!-- ban be -->
-                    <div :class="friend ? 'active filter-interac' : 'filter-interac'">
-                        <div class="filter-header__box align-center">
+                    <div :class="filter && filter === 'friend' ? 'active filter-interac' : 'filter-interac'">
+                        <label class="filter-header__box align-center">
                             <div class="align-center">
                                 <img src="/images/friend.png" alt="" />
                                 <span class="filter-interac__header-title"> Bạn bè </span>
                             </div>
-                            <input type="radio" id="friend" :checked="friend" @click="friend = !friend" />
-                        </div>
-                        <div class="filter-main__content" v-if="friend">
+                            <input
+                                type="radio"
+                                id="interac-radio"
+                                :checked="filter && filter === 'friend'"
+                                @click="setActive('friend')"
+                            />
+                        </label>
+                        <div class="filter-main__content" v-if="filter && filter === 'friend'">
                             <label class="title-filter">số lượng bạn bè</label>
 
                             <form>
@@ -142,7 +158,7 @@
                                     <option value="">Lớn hơn hoặc bằng</option>
                                 </select>
                                 <div class="friend-same_box">
-                                    <input class="friend-same_input" type="number" placeholder="Điền số lượng..." />
+                                    <input class="friend-same_input" type="string" placeholder="Điền số lượng..." />
                                     <img src="/images/pen.png" class="pen" alt="" />
                                 </div>
 
@@ -154,15 +170,20 @@
                         </div>
                     </div>
                     <!-- ngay kh dang bai -->
-                    <div :class="no_post ? 'active filter-interac' : 'filter-interac'">
-                        <div class="filter-header__box align-center">
+                    <div :class="filter && filter === 'no_post' ? 'active filter-interac' : 'filter-interac'">
+                        <label class="filter-header__box align-center">
                             <div class="align-center">
                                 <img src="/images/nopost.png" alt="" />
                                 <span class="filter-interac__header-title"> Ngày không đăng bài </span>
                             </div>
-                            <input type="radio" id="no_post" :checked="no_post" @click="no_post = !no_post" />
-                        </div>
-                        <div class="filter-main__content" v-if="no_post">
+                            <input
+                                type="radio"
+                                id="interac-radio"
+                                :checked="filter && filter === 'no_post'"
+                                @click="setActive('no_post')"
+                            />
+                        </label>
+                        <div class="filter-main__content" v-if="filter && filter === 'no_post'">
                             <label class="title-filter">Không đăng bài kể từ ngày:</label>
 
                             <form>
@@ -207,7 +228,11 @@
                             </button>
                         </form>
                         <div class="btn-user flex">
-                            <img src="/images/avatar.png" alt="" />
+                            <img
+                                class="btn-user__avatar"
+                                :src="`https://graph.facebook.com/${this.infomation.acountId}/picture?access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`"
+                                alt=""
+                            />
                             <span class="arrow-down">
                                 <img src="/images/down.png" alt="" />
                             </span>
@@ -218,12 +243,12 @@
                     <table>
                         <thead class="">
                             <th class="th-checkbox"></th>
-                            <th>Tên tài khoản</th>
-                            <th>Tin nhắn</th>
-                            <th>Reaction</th>
-                            <th>Bình luận</th>
-                            <th>Chia sẻ bài viết</th>
-                            <th>Trạng thái</th>
+                            <th style="width: 170px">Tên tài khoản</th>
+                            <th v-if="interacs.includes('message')">Tin nhắn</th>
+                            <th v-if="interacs.includes('reaction')">Reaction</th>
+                            <th v-if="interacs.includes('comment')">Bình luận</th>
+                            <th v-if="interacs.includes('share')">Chia sẻ bài viết</th>
+                            <th>Tổng điểm</th>
                             <th>Hành dộng</th>
                         </thead>
                         <tbody>
@@ -246,31 +271,34 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td>
+                                <!-- <td> -->
+                                <td v-if="interacs.includes('message')">
                                     <span class="content-table__number">{{ item.messages }}</span>
-                                    <span class="content-tabel__point">
+                                    <span class="content-table__point">
                                         {{ item.messages * 0.5 }}
                                         điểm</span
                                     >
                                 </td>
-                                <td>
+                                <!-- <td> -->
+                                <td v-if="interacs.includes('reaction')">
                                     <span class="content-table__number">{{ item.reactions }}</span>
-                                    <span class="content-tabel__point">
+                                    <span class="content-table__point">
                                         {{ item.reactions }}
                                         điểm</span
                                     >
                                 </td>
-                                <td>
+                                <!-- <td> -->
+                                <td v-if="interacs.includes('comment')">
                                     <span class="content-table__number">{{ item.comments }}</span>
-                                    <span class="content-tabel__point">
+                                    <span class="content-table__point">
                                         {{ item.comments * 3 }}
                                         điểm</span
                                     >
                                 </td>
-
-                                <td>
+                                <!-- <td> -->
+                                <td v-if="interacs.includes('share')">
                                     <span class="content-table__number">{{ item.message }}</span>
-                                    <span class="content-tabel__point">điểm</span>
+                                    <span class="content-table__point">điểm</span>
                                 </td>
                                 <td>
                                     <span>{{ item.status }}</span>
@@ -329,19 +357,24 @@ export default {
             reaction: [],
             comment: [],
             loading: true,
-            interac: false,
             acount_disabled: false,
-            same_friend: false,
-            friend: false,
-            no_post: false,
+            filter: null,
+            interacs: ['message', 'reaction', 'comment', 'share'],
+            keys: ['message', 'reaction', 'comment', 'share'],
         };
     },
     created() {},
     methods: {
+        getFormValuesInterac() {
+            this.interacs = this.keys;
+        },
+        setActive(key) {
+            this.filter = key;
+        },
         saveFriends() {
             console.log('save');
             this.values = this.friends.map((friend) => {
-                const id = friend.node.node.id;
+                const id = friend.id;
                 const getMessageById = this.messages.find(
                     (values) => values.all_participants.nodes[0].messaging_actor.id === id,
                 );
@@ -350,138 +383,144 @@ export default {
                 const getComments = this.comment.filter((item) => item.id === id);
                 return {
                     id,
-                    name: friend.node.title.text,
-                    url: friend.node.image.uri,
+                    name: friend.title.text,
+                    url: friend.url,
+                    status: friend.status,
+                    acount_disabled: friend.acount_disabled,
+                    mutual_friend: friend.mutual_friend,
                     messages,
                     comments: getComments.length,
                     reactions: getReactions.length,
-                    status: friend.node.actions_renderer.action.title.text,
                 };
             });
+            console.log('this.values', this.values);
+        },
+        api(url, data) {
+            return axios({
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                withCredentials: true,
+                mode: 'no-cors',
+                url,
+                data,
+            });
+        },
+        getListFriendRecursion(cursor) {
+            return this.api(
+                'https://www.facebook.com/api/graphql/',
+                qs.stringify({
+                    __a: 1,
+                    dpr: 1,
+                    fb_dtsg: this.infomation.dtsg,
+                    variables: JSON.stringify({
+                        count: 8,
+                        cursor,
+                        scale: 1,
+                        search: null,
+                        id: window.btoa(`app_collection:${this.infomation.acountId}:2356318349:2`),
+                    }),
+                    doc_id: 6227691327241927,
+                }),
+            )
+                .then(async ({ data }) => {
+                    console.log(1, data);
+                    if (!data.data.node.pageItems) return;
+                    const pageItems = data.data.node.pageItems;
+                    console.log('pageItems', pageItems);
+                    const edges = pageItems.edges;
+                    console.log('edges', edges);
+                    const edgesFormat = edges.map((friend) => {
+                        console.log('friend', friend);
+                        return {
+                            id: friend.node.node.id,
+                            name: friend.node.title.text,
+                            url: friend.node.image.uri,
+                            status: friend.node.actions_renderer.action.title.text,
+                            acount_disabled: !!friend.node.subtitle_text,
+                            mutual_friend: friend?.node,
+                            // friend?.node?.subtitle_text?.aggregated_ranges[0].count || 'Người dùng đã ẩn bạn',
+                            // mutual_friend: friend.node.subtitle_text && friend.node.subtitle_text.aggregated_ranges[0].count
+                            //     ? friend.node.subtitle_text.aggregated_ranges[0].count
+                            //     : 'Người dùng đã ẩn bạn',
+                        };
+                    });
+                    this.friends = [...this.friends, ...edgesFormat];
+                    // if (pageItems.page_info.has_next_page && pageItems.page_info.end_cursor) {
+                    //     await this.getListFriendRecursion(pageItems.page_info.end_cursor);
+                    //     return;
+                    // }
+                    this.getReactionAndCommentRecursion();
+                })
+                .catch((err) => {
+                    console.log('1111111', err);
+                });
+        },
+        getReactionAndCommentRecursion() {
+            this.api(
+                'https://www.facebook.com/api/graphql/',
+                qs.stringify({
+                    fb_dtsg: this.infomation.dtsg,
+                    q: `node(${this.infomation.acountId}){timeline_feed_units.first(100).after(){page_info,edges{node{id,creation_time,feedback{reactors{nodes{id,name}},commenters{nodes{id,name}}}}}}}`,
+                }),
+            )
+                .then(({ data }) => {
+                    console.log(2, data);
+                    const userId = this.infomation.acountId;
+                    const res = data[userId].timeline_feed_units;
+                    if (!res) return;
+                    const edges = res.edges;
+                    console.log('reactiton and comment', res);
+                    let listReaction = [];
+                    let listComment = [];
+
+                    edges.forEach((item) => {
+                        listReaction = [...listReaction, ...item.node.feedback.reactors.nodes];
+                        listComment = [...listComment, ...item.node.feedback.commenters.nodes];
+                    });
+
+                    this.reaction = [...this.reaction, ...listReaction];
+                    this.comment = [...this.comment, ...listComment];
+                    // if (res.page_info.has_next_page) {
+                    //     return;
+                    //     getReactionAndCommentRecursion(res.page_info.end_cursor);
+                    // }
+                    console.log('listReaction', listReaction);
+                    console.log('listComment', listComment);
+                    this.getMessages();
+                })
+                .catch((err) => {
+                    console.log('2222', err);
+                });
+        },
+        getMessages() {
+            this.api(
+                'https://www.facebook.com/api/graphql/',
+                qs.stringify({
+                    fb_dtsg: this.infomation.dtsg,
+                    q: `viewer(){message_threads{count,nodes{customization_info{emoji,outgoing_bubble_color,participant_customizations{participant_id,nickname}},all_participants{nodes{messaging_actor{name,id,profile_picture}}},thread_type,name,messages_count,image,id}}}`,
+                }),
+            )
+                .then(({ data }) => {
+                    if (!data.viewer.message_threads.nodes) return;
+                    console.log('data', data);
+                    console.log('call api messages', data.viewer.message_threads.nodes);
+                    this.messages = data.viewer.message_threads.nodes;
+                    this.saveFriends();
+                    this.loading = false;
+                })
+                .catch((err) => {
+                    console.log('33333', err);
+                });
         },
     },
-    // mounted() {
-    //     console.log(222222);
-    //     if (!Object.keys(this.infomation).length) return;
-    //     const config = {
-    //         method: 'post',
-    //         headers: {
-    //             'Content-Type': 'application/x-www-form-urlencoded',
-    //         },
-    //         withCredentials: true,
-    //         mode: 'no-cors',
-    //     };
-    //     console.log(999999);
-    //     const getListFriendRecursion = (cursor) => {
-    //         axios({
-    //             ...config,
-    //             url: 'https://www.facebook.com/api/graphql/',
-    //             data: qs.stringify({
-    //                 __a: 1,
-    //                 dpr: 1,
-    //                 fb_dtsg: this.infomation.dtsg,
-    //                 variables: JSON.stringify({
-    //                     count: 8,
-    //                     cursor,
-    //                     scale: 1,
-    //                     search: null,
-    //                     id: window.btoa(`app_collection:${this.infomation.acountId}:2356318349:2`),
-    //                 }),
-    //                 doc_id: 6227691327241927,
-    //             }),
-    //         })
-    //             .then(
-    //                 ({
-    //                     data: {
-    //                         data: {
-    //                             node: { pageItems },
-    //                         },
-    //                     },
-    //                 }) => {
-    //                     console.log('pageItems', pageItems);
-    //                     this.friends = [...this.friends, ...pageItems.edges];
-    //                     if (pageItems.page_info.has_next_page && pageItems.page_info.end_cursor) {
-    //                         getListFriendRecursion(pageItems.page_info.end_cursor);
-    //                     }
-    //                 },
-    //             )
-    //             .catch((err) => {
-    //                 console.log('1111111', err);
-    //             });
-    //     };
-
-    //     // getListFriendRecursion();
-
-    //     const getReactionAndCommentRecursion = (end_cursor = '') => {
-    //         axios({
-    //             ...config,
-    //             url: 'https://www.facebook.com/api/graphql/',
-    //             data: qs.stringify({
-    //                 fb_dtsg: this.infomation.dtsg,
-    //                 q: `node(${this.infomation.acountId}){timeline_feed_units.first(100).after(){page_info,edges{node{id,creation_time,feedback{reactors{nodes{id,name}},commenters{nodes{id,name}}}}}}}`,
-    //             }),
-    //         })
-    //             .then(({ data }) => {
-    //                 const userId = this.infomation.acountId;
-    //                 console.log('userId', userId);
-    //                 const res = data[userId].timeline_feed_units;
-    //                 const edges = res.edges;
-    //                 console.log('reactiton and comment', res);
-    //                 let listReaction = [];
-    //                 let listComment = [];
-
-    //                 edges.forEach((item) => {
-    //                     listReaction = [...listReaction, ...item.node.feedback.reactors.nodes];
-    //                     listComment = [...listComment, ...item.node.feedback.commenters.nodes];
-    //                 });
-
-    //                 this.reaction = [...this.reaction, ...listReaction];
-    //                 this.comment = [...this.comment, ...listComment];
-    //                 if (res.page_info.has_next_page) {
-    //                     getReactionAndCommentRecursion(res.page_info.end_cursor);
-    //                 }
-    //                 console.log('listReaction', listReaction);
-    //                 console.log('listComment', listComment);
-    //             })
-    //             .catch((err) => {
-    //                 console.log('1111111', err);
-    //             });
-    //         getReactionAndCommentRecursion();
-    //     };
-
-    //     const getMessages = axios({
-    //         ...config,
-    //         url: 'https://www.facebook.com/api/graphql/',
-    //         data: qs.stringify({
-    //             fb_dtsg: this.infomation.dtsg,
-    //             q: `viewer(){message_threads{count,nodes{customization_info{emoji,outgoing_bubble_color,participant_customizations{participant_id,nickname}},all_participants{nodes{messaging_actor{name,id,profile_picture}}},thread_type,name,messages_count,image,id}}}`,
-    //         }),
-    //     }).then(({ data }) => {
-    //         console.log('call api messages', data.viewer.message_threads.nodes);
-    //         this.messages = data.viewer.message_threads.nodes;
-    //     });
-    //     async function getData() {
-    //         await getListFriendRecursion();
-    //         await getReactionAndCommentRecursion();
-    //         getMessages();
-    //         this.loading = false;
-    //         this.saveFriends();
-    //     }
-    //     getData();
-    //     // Promise.all([getListFriendRecursion, getReactionAndCommentRecursion, getMessages])
-    //     //     .then((res) => {
-    //     //         console.log('res', res);
-    //     //         this.saveFriends();
-    //     //     })
-    //     //     .catch((err) => {
-    //     //         console.log('err promise all', err);
-    //     //     })
-    //     //     .finally(() => {
-    //     //         this.loading = false;
-    //     //     });
-
-    //     // this.saveFriends();
-    // },
+    mounted() {
+        console.log(111);
+        if (!Object.keys(this.infomation).length) return;
+        console.log(222);
+        this.getListFriendRecursion();
+    },
 };
 </script>
 
@@ -606,7 +645,7 @@ export default {
 }
 .pen {
     position: absolute;
-    right: 32px;
+    right: 0;
     top: 50%;
     transform: translateY(-50%);
     width: 16px;
@@ -696,7 +735,7 @@ header {
 }
 .fb-info .id {
     font-style: normal;
-    font-weight: 400;
+    font-family: Medium;
     font-size: 14px;
     line-height: 14px;
     color: #78889b;
@@ -772,6 +811,16 @@ header {
     background: #f0f6fc;
     border-radius: 5px;
 }
+.btn-user__avatar {
+    width: 34px;
+    height: 34px;
+    border: 0.4px solid #ffffff;
+    filter: drop-shadow(0px 2px 9px rgba(0, 0, 0, 0.1));
+    border-radius: 4px;
+}
+.arrow-down {
+    padding-left: 10px;
+}
 .content-table {
 }
 .content-table table {
@@ -833,7 +882,7 @@ header {
 }
 .content-table__key {
     font-style: normal;
-    font-weight: 400;
+    font-family: Medium;
     font-size: 14px;
     line-height: 17px;
     color: #78889b;
@@ -848,7 +897,7 @@ header {
 }
 .content-table__point {
     font-style: normal;
-    font-weight: 400;
+    font-family: Medium;
     font-size: 14px;
     line-height: 17px;
     color: #78889b;

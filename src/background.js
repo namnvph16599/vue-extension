@@ -19,3 +19,8 @@ chrome.action.onClicked.addListener((tab) => {
         url,
     });
 });
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    // ... handle message
+    return true; // Error message says you already return true
+});
